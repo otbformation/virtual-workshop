@@ -14,6 +14,8 @@ import rasterio
 from rasterio.warp import transform_bounds
 from rasterio.warp import transform
 
+import folium
+
 # ignore rasterio FurtureWarnings
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
