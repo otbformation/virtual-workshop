@@ -16,7 +16,18 @@ The wiki pages associatd with this repo contain some slides as well as some data
 * 14:00 - 15:30		OTB Processing in Python (Classification 1/2)
 * 15:30 - 17:00		OTB Processing in Python (Classification 2/2)
 
-## Installation Instructions: Linux
+### Installation 
+
+#### Google Colab
+
+* Go to [Google Colab](https://colab.research.google.com)
+* Log in with your Google account
+* Click to File -> Open notebook
+* Select Github
+* Put the URL of this repository in the search field
+* Select a notebook
+
+#### Instructions: Linux (Debian/Ubuntu)
 
 In order to install the Orfeo Toolbox you need to install the prerequisites. You can do this using the following commands
 ```
@@ -28,29 +39,28 @@ sudo apt install cmake
 sudo apt-get install build-essential
 sudo apt-get install libgl1-mesa-dev
 ```
+
 Download the 64-bit Linux installation of the Orfeo Toolbox
 ```
-mkdir -p install && cd install
+mkdir -p ~/install && cd ~/install
 wget https://www.orfeo-toolbox.org/packages/OTB-7.2.0-Linux64.run
 ```
 
 This package is a self-extractable archive. You may uncompress it with a double-click on the file, or from the command line as follows:
-
 ```
 chmod +x OTB-7.2.0-Linux64.run
 ./OTB-7.2.0-Linux64.run
 cd OTB-7.2.0-Linux64/
+. otbenv.profile
 ctest -S share/otb/swig/build_wrapping.cmake -VV
 ```
 
-To activate the python virtual environment, use the following commands
+Then, create a vitual environment
 ```
-source ./otbenv.profile
+python3 -m venv ~/venv_OTB7.0
+. ~/venv_OTB7.0/bin/activate
+pip install --upgrade pip
+export CPATH="~/install/OTB-7.2.0-Linux64/include"
+pip install --no-binary rasterio
+pip install notebook matplotlib folium Shapely requests geojson 
 ```
-Finally, use the following script to test that the Orfeo Toolbox is working
-
-```
-python3
->>> import otbApplication
-```
-You are now ready to start using the Orfeo Toolbox.
