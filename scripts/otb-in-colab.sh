@@ -34,6 +34,7 @@ apt-get update 1>/dev/null 2>&1 && apt-get install --no-install-recommends -y \
     python3 \
     python3-pip \
     python3-numpy \
+	python3-opencv \
     unzip \
     ninja-build \
     libboost-date-time-dev \
@@ -44,6 +45,7 @@ apt-get update 1>/dev/null 2>&1 && apt-get install --no-install-recommends -y \
     libboost-thread-dev \
     libgdal-dev \
     libinsighttoolkit4-dev \
+	libopencv-dev \
     libopenthreads-dev \
     libossim-dev \
     libtinyxml-dev \
@@ -61,7 +63,8 @@ if [ "$FROM_SCRATCH" -eq 0 ]
 then
     # download pre-compiled-otb
     echo ">> (2/4) Download pre-compiled-otb (expected duration: <1s)"
-    #wget https://raw.githubusercontent.com/dyoussef/otb-colab/main/otb.tar.gz 1>/dev/null 2>&1
+	# Download Google Drive file --no-check-certificate
+    wget 'https://docs.google.com/uc?export=download&id=1xEapXzECWKf2DkqV0xk7MoLQGRo-Njd8' -O /content/otb.tar.gz 1>/dev/null 2>&1
 
 else
     # create orfeo toolbox archive
@@ -77,7 +80,7 @@ else
 	"-DOTB_USE_GLEW:BOOL=OFF" "-DOTB_USE_GLFW:BOOL=OFF" "-DOTB_USE_GLUT:BOOL=OFF" \
 	"-DOTB_USE_GSL:BOOL=OFF" "-DOTB_USE_LIBKML:BOOL=OFF" "-DOTB_USE_LIBSVM:BOOL=ON" \
 	"-DOTB_USE_MPI:BOOL=OFF" "-DOTB_USE_MUPARSER:BOOL=ON" "-DOTB_USE_MUPARSERX:BOOL=ON" \
-	"-DOTB_USE_OPENCV:BOOL=OFF" "-DOTB_USE_OPENGL:BOOL=OFF" "-DOTB_USE_OPENMP:BOOL=OFF" \
+	"-DOTB_USE_OPENCV:BOOL=ON" "-DOTB_USE_OPENGL:BOOL=OFF" "-DOTB_USE_OPENMP:BOOL=OFF" \
 	"-DOTB_USE_QT:BOOL=OFF" "-DOTB_USE_QWT:BOOL=OFF" "-DOTB_USE_SIFTFAST:BOOL=ON" \
 	"-DOTB_USE_SPTW:BOOL=OFF" "-DOTB_WRAP_PYTHON:BOOL=ON" "-DCMAKE_BUILD_TYPE=Release" \
 	"-DOTB_USE_SHARK:BOOL=OFF" "-DBUILD_EXAMPLES:BOOL=OFF" \
@@ -104,7 +107,8 @@ export OTB_APPLICATION_PATH="/usr/lib/otb/applications"
 cp /usr/lib/otb/python/otbApplication.py /usr/local/lib/python3.7/dist-packages/.
 cp /usr/lib/otb/python/_otbApplication.so /usr/local/lib/python3.7/dist-packages/.
 pip install --upgrade pip
-pip install --no-binary rasterio
+pip install rasterio --no-binary rasterio
+pip uninstall -y datascience
 pip install --upgrade folium geojson
 echo "Elapsed time: ${SECONDS} seconds"
 
