@@ -3,7 +3,7 @@ FROM ubuntu:20.04
 RUN echo "Europe/Paris" > /etc/timezone
 
 RUN apt-get update -y \
- && apt-get upgrade -y
+ && apt-get upgrade -y \
  && apt-get install -y --no-install-recommends \
         ca-certificates \
         curl \
