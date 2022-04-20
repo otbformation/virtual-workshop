@@ -31,6 +31,7 @@ RUN apt-get update -y \
         libxinerama1 \
         python3 \ 
         python3-dev \
+	python3-pip \
         python3-numpy \
         libtool \
  && rm -rf /var/lib/apt/lists/*
